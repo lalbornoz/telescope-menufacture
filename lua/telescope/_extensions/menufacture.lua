@@ -78,6 +78,9 @@ M.folder_finder = function(opts)
     if opts.no_ignore then
       table.insert(args, '--no-ignore-vcs')
     end
+    if opts.max_depth ~= nil then
+      table.insert(args, '--max-depth=' .. opts.max_depth)
+    end
     return async_oneshot_finder {
       fn_command = function()
         return { command = 'fd', args = args }
@@ -91,6 +94,7 @@ M.folder_finder = function(opts)
       hidden = opts.hidden,
       only_dirs = true,
       respect_gitignore = opts.respect_gitignore,
+      depth = opts.max_depth,
     })
     table.insert(data, 1, cwd)
     return finders.new_table { results = data, entry_maker = entry_maker }
