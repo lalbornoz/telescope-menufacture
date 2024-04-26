@@ -86,7 +86,7 @@ M.folder_finder = function(opts)
         return { command = 'fd', args = args }
       end,
       entry_maker = entry_maker,
-      results = { entry_maker(cwd) },
+      results = { entry_maker(cwd), entry_maker("..") },
       cwd = cwd,
     }
   else
@@ -97,6 +97,7 @@ M.folder_finder = function(opts)
       depth = opts.max_depth,
     })
     table.insert(data, 1, cwd)
+    table.insert(data, 2, "..")
     return finders.new_table { results = data, entry_maker = entry_maker }
   end
 end
